@@ -44,14 +44,13 @@ module Lit::CloudTranslation::Providers
   #     }
   #   end
   class Google < Base
+
     def translate(text:, from: nil, to:, **opts)
-      @client ||=
-        ::Google::Cloud::Translate.new(project_id: config.keyfile_hash['project_id'],
-                                       credentials: config.keyfile_hash)
+      @client ||= ::Google::Cloud::Translate.new( version: :v2, project_id: config.keyfile_hash['project_id'], credentials: config.keyfile_hash)
       result = @client.translate(sanitize_text(text), from: from, to: to, **opts)
       unsanitize_text(
         case result
-        when ::Google::Cloud::Translate::Translation then result.text
+        when ::Google::Cloud::Translate::V2::Translation then result.text
         when Array then result.map(&:text)
         end
       )
@@ -62,6 +61,7 @@ module Lit::CloudTranslation::Providers
       raise ::Lit::CloudTranslation::TranslationError, error_description,
             cause: e
     rescue ::Google::Cloud::Error => e
+  
       raise ::Lit::CloudTranslation::TranslationError, e.message, cause: e
     end
 
