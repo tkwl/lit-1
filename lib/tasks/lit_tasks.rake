@@ -1,4 +1,17 @@
 namespace :lit do
+  desc 'Bulk Translate YML Files'
+  task bulktranslate: :environment do
+    locale_keys = ENV['LOCALES'].to_s.split(',').presence || I18n.available_locales
+    source_locale = ENV['SOURCE'].presence&.downcase&.to_sym || :yaml
+
+    locale_keys.each do |loc|
+      if translated = Lit::BulkTranslate.call(locale_keys: locale_keys, source_locale: source_locale)
+        puts "Successfully translated #{loc}."
+      end
+      
+    end
+  end
+  
   desc 'Exports translated strings from lit to config/locales/lit.yml file.'
   task export: :environment do
     locale_keys = ENV['LOCALES'].to_s.split(',') || []
