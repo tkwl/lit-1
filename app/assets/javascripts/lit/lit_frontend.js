@@ -78,8 +78,8 @@
   };
 
   $(document).ready(function(){
-    $('<div id="lit_button_wrapper" />').appendTo('body');
-    $btn = $('#lit_button_wrapper').text('Enable / disable lit highlight');
+    $('<div id="lit_button_wrapper" />').appendTo('#mm-6');
+    $btn = $('#lit_button_wrapper').html('<i class="fa fa-language"></i> Inline Edit');
     $btn.on('click', function(){
       removeLitForm();
       if($btn.hasClass('lit-highlight-enabled')){

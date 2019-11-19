@@ -6,7 +6,7 @@
 #lit_button_wrapper{
   position: fixed;
   bottom: 20px;
-  right: 20px;
+/*  right: 20px; */
   z-index: 100;
   background-color: red;
   border-radius: 4px;
